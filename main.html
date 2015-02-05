@@ -2,29 +2,164 @@
 <style>
 
 body{
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-	font-weight:100;
+	font-weight:300;
 	-webkit-font-smoothing:antialiased;
+	background:rgb(245,245,245);
+	font-family:Arial;
+}
+
+.max-center{
+	margin:0px auto;
+	max-width:1200px;
+}
+
+.header{
+	background:rgb(255,255,255);
+	padding:20px;
+}
+.header .logo{
+	float:left;
+	
+	vertical-align:middle;
+	
+	font-size:24px;
+	line-height:30px;
+	font-family:lato;
+	font-weight:400;
+	
+	cursor:default;
+}
+.header .logo label{
+	font-weight:300;
+	color:rgb(102,102,102);
+}
+.header .button{
+	background:rgb(225,225,225);
+	
+	float:right;
+	vertical-align:middle;
+	
+	padding:9px 14px;
+	margin:0px 6px;
+	
+	-webkit-border-radius: 5px;
+	-moz-border-radius:    5px;
+	border-radius:         5px;
+	
+	font-weight:700;
+	font-size:11px;
+	line-height:11px;
+	color:rgb(102,102,102);
+	
+	cursor:pointer;
+}
+.header .button:hover{
+	background:rgb(235,235,235);
+}
+.header .button.login{
+	color:rgb(255,255,255);
+	background:rgb(87,146,240);
+}
+.header .button.login:hover{
+	background:rgb(72,131,225);
+}
+.header input{
+	float:right;
+	vertical-align:middle;
+	
+	padding:8px 12px 6px 12px;
+	margin:0px 6px;
+	
+	border:1px solid rgb(170,170,170);
+	-webkit-border-radius: 5px;
+	-moz-border-radius:    5px;
+	border-radius:         5px;
+	
+	font-size:12px;
+	line-height:12px;
+	color:rgb(51,51,51);
+	
+	width:150px;
+}
+.header input:active,
+.header input:focus{
+	border-color:rgb(87,146,240);
+	-webkit-box-shadow: inset 0px 0px 4px rgba(0,0,100,0.15);
+	-mos-box-shadow:    inset 0px 0px 4px rgba(0,0,100,0.15);
+	-moz-box-shadow:    inset 0px 0px 4px rgba(0,0,100,0.15);
+	-o-box-shadow:      inset 0px 0px 4px rgba(0,0,100,0.15);
+	box-shadow:         inset 0px 0px 4px rgba(0,0,100,0.15);
+}
+
+.pitch{
+/*	background-image:url(http://thecounterpress.co.uk/wp-content/uploads/2014/10/BC_Stack_laidOut_angle.jpg);*/
+	background-image:url(http://thecounterpress.co.uk/wp-content/uploads/2014/10/BC_Stack_laidOut_angle_detail.jpg);
+	background-repeat:no-repeat;
+	background-size:cover;
+	height:620px;
+	position:relative;
+}
+.pitch .content{
+	position:absolute;
+	bottom:50px;
+	left:0px;
+	right:0px;
+	
+	padding:100px 80px;
+	
+	background:rgba(255,255,255,0.7);
+	
+	text-align:center;
+	font-family:'lato';
+}
+.pitch .content h1{
+	font-size:60px;
+	font-weight:400;
+	
+	margin:0px;
+	padding:0px;
+	padding-bottom:12px;
+}
+.pitch .content h2{
+	font-size:40px;
+	font-weight:300;
+	margin:0px;
+	padding:0px;
 }
 
 </style>
 <html>
 <head>
 <meta charset="utf-8" />
-<title>Larco Labs</title>
+<title>Contact.me | Business Cards Reinvented</title>
+
 <meta content="yes" name="apple-mobile-web-app-capable" />
 <meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport"/>
+
 <link rel="stylesheet" href="/resources/css/resets.css"/>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'/>
+
 </head>
 <body>
 
 
+<div class='header'>
+	<div class='max-center'>
+		<div class='logo'>Contact<label>.me</label></div>
+		<div class='button signup'>Sign Up</div>
+		<div class='button login'>Log In</div>
+		<input type='password' placeholder='Password' name='password'/>
+		<input type='text' placeholder='Email address' name='email'/>
+		<div class='clearfix'></div>
+	</div>
+</div>
 
+<div class='pitch'>
+	<div class='content'>
+		<h1>Business Cards Reinvented</h1>
+		<h2>Paperless, hassle-free,<br/>easy to swap, easy to organize.</h2>
+	</div>
+</div>
 
 
 <script type='text/javascript'>
