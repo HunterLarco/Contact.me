@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<style>
+
+html body{
+	background:rgb(255,255,255);
+}
+
+.frame{
+	position:fixed;
+	top:0px;
+	left:0px;
+	right:0px;
+	bottom:0px;
+	
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-pack: center;
+  -webkit-box-align: center;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-pack: center;
+  -moz-box-align: center;
+  display: box;
+  box-orient: horizontal;
+  box-pack: center;
+  box-align: center;
+	
+	overflow:scroll;
+}
+
+.login{
+	background:rgb(245,245,245);
+	
+	-webkit-border-radius: 12px;
+	-moz-border-radius:    12px;
+	border-radius:         12px;
+	
+	padding:50px;
+	margin:100px;
+}
+.login h2{
+	margin:0px 0px;
+	padding:6px 0px;
+	
+	font-weight:700;
+	font-size:13px;
+	line-height:13px;
+	color:rgb(51,51,51);
+}
+.login h1{
+	font-family:'lato';
+	font-weight:300;
+	font-size:30px;
+	margin:0px;
+	padding:0px 0px 30px 0px;
+}
+
+.login input{
+	padding:10px 12px 8px 12px;
+	margin:0px 0px;
+	
+	border:1px solid rgb(170,170,170);
+	-webkit-border-radius: 2px;
+	-moz-border-radius:    2px;
+	border-radius:         2px;
+	
+	font-size:14px;
+	line-height:14px;
+	color:rgb(51,51,51);
+	
+	width:300px;
+}
+.login input:active,
+.login input:focus{
+	border-color:rgb(87,146,240);
+	-webkit-box-shadow: inset 0px 0px 4px rgba(0,0,100,0.15);
+	-mos-box-shadow:    inset 0px 0px 4px rgba(0,0,100,0.15);
+	-moz-box-shadow:    inset 0px 0px 4px rgba(0,0,100,0.15);
+	-o-box-shadow:      inset 0px 0px 4px rgba(0,0,100,0.15);
+	box-shadow:         inset 0px 0px 4px rgba(0,0,100,0.15);
+}
+
+.login .spacer{
+	display:block;
+	height:14px;
+	width:100%;
+}
+
+.login .button{
+	background:rgb(87,146,240);
+	
+	padding:11px 14px;
+	
+	-webkit-border-radius: 2px;
+	-moz-border-radius:    2px;
+	border-radius:         2px;
+	
+	font-weight:700;
+	font-size:14px;
+	line-height:14px;
+	color:rgb(255,255,255);
+	text-align:center;
+	
+	cursor:pointer;
+}
+.login .button:hover{
+	background:rgb(72,131,225);
+}
+.login .button.grey{
+	background:rgb(215,215,215);
+	color:rgb(102,102,102);
+}
+.login .button.grey:hover{
+	background:rgb(205,205,205);
+}
+
+.login p{
+	padding:16px 0px;
+	margin:0px;
+	
+	color:rgb(0,121,193);
+	
+	font-size:14px;
+	line-height:14px;
+}
+.login .line{
+	display:block;
+	height:1px;
+	width:100%;
+	background:rgb(160,160,160);
+}
+
+.logo{
+	padding:30px;
+	
+	position:fixed;
+}
+
+</style>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Contact.me | Sign Up</title>
+
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport"/>
+
+<link rel="stylesheet" href="/resources/css/resets.css"/>
+<link rel="stylesheet" href="/resources/css/global.css"/>
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400' rel='stylesheet' type='text/css'/>
+
+</head>
+<body>
+
+
+<div class='frame'>
+	<form class='login'>
+		
+		<h1>Create a new account</h1>
+		<h2>Full Name</h2>
+		<input type='text' placeholder='John Doe'/>
+		<div class='spacer'></div>
+		<h2>Email address</h2>
+		<input type='text' placeholder='johndoe@gmail.com'/>
+		<div class='spacer'></div>
+		<h2>Password</h2>
+		<input type='password' placeholder='john_is_awesome'/>
+		<div class='spacer'></div>
+		<h2>Confirm Password</h2>
+		<input type='password' placeholder='john_is_awesome'/>
+		<div class='spacer'></div>
+		<div class='button'>Sign Up</div>
+		<div class='spacer'></div>
+		<div class='spacer'></div>
+		<div class='line'></div>
+		<div class='spacer'></div>
+		<a href='/login'><div class='button grey'>Log In</div></a>
+		
+	</form>
+</div>
+
+<a href='/'><div class='logo'>Contact<label>.me</label></div></a>
+
+
+<script type='text/javascript'>
+(function(){
+	
+})();
+</script>
+</body>
+</html>
