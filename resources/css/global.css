@@ -1,0 +1,24 @@
+body{
+	font-weight:300;
+	-webkit-font-smoothing:antialiased;
+	background:rgb(245,245,245);
+	font-family:Arial;
+}
+
+.max-center{
+	margin:0px auto;
+	max-width:1200px;
+}
+
+.logo{
+	font-size:26px;
+	line-height:28px;
+	font-family:lato;
+	font-weight:400;
+	
+	display:inline-block;
+}
+.logo label{
+	font-weight:300;
+	color:rgb(102,102,102);
+}
