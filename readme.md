@@ -6,8 +6,8 @@ Contributers&ensp;·&ensp;[Hunter Larco](http://larcolabs.com)
 
 ##Progress
 
-* `2.25.15` Shake team organizes on trello to continue development
-* `2.22.15` Shake begins development at [HackMIT Blueprint](blueprint.hackmit.org)
-* `2.5.15` Landing page tets mockup
+* `2.25.15` [Shake team](//github.com/blueprint-shake) organizes on trello to continue development
+* `2.22.15` Shake begins development at [HackMIT Blueprint](http://blueprint.hackmit.org)
+* `2.5.15` Landing page test mockup
 * `2.4.15` First rough GUIs designed
 * `2.1.15` Contact.me concept conceived
