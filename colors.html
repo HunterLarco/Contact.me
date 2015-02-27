@@ -1,0 +1,35 @@
+<style>
+div{
+	height:300px;
+	width:300px;
+	display:inline-block;
+	margin:20px;
+}
+</style>
+<script src='/resources/scripts/Color.js'></script>
+
+
+
+<script>
+
+window.addEventListener('load', Init);
+
+function AddSwatch(color){
+	var div = document.createElement('div');
+	div.style.background = 'rgb('+Math.round(color[0])+','+Math.round(color[1])+','+Math.round(color[2])+')';
+	document.body.appendChild(div);
+}
+
+var count = 0;
+function Init() {
+	console.log(count);
+	if(count++ == 50){
+		console.log('done');
+		return;
+	};
+  requestAnimationFrame(Init);
+	AddSwatch(Color.generate());
+}
+
+
+</script>

@@ -1,27 +1,22 @@
 <!DOCTYPE html>
 <style>
 
-canvas{
-	position:fixed;
-	left:0px;
-	top:0px;
-	width:100%;
-	height:100%;
+body{
+	font-family:arial;
 	
 	background:rgb(235,235,235);
 }
-#banner{
-	text-align:center;
-	font-size:40px;
-	position:absolute;
+
+.canvas{
+	position:fixed;
 	top:0px;
 	left:0px;
 	right:0px;
-	padding:30px;
-	
-	font-family:arial;
-	
-	z-index:1;
+	bottom:0px;
+}
+.canvas canvas{
+	width:100%;
+	height:100%;
 }
 
 </style>
@@ -45,15 +40,16 @@ canvas{
 </head>
 <body>
 
-<div id='banner'>No Match</div>
-<canvas id='canvas'></canvas>
+
+<div class='canvas'><canvas id='canvas'></canvas></div>
+
 
 <script type='text/javascript'>
 (function(){
 	
 	/*
 	
-	Device.register();// auto assign ID... use nick name
+	Device.register('Mobile Device');// auto assign ID... use nick name
 	device.connect('120cch8934');
 	device.addEventListener('onmessage', OnReceive);
 	device.send(data);
@@ -63,46 +59,13 @@ canvas{
 	*/
 	
 	window.addEventListener('load', Init);
-	
-	var canvas, ctx, width, height;
-	
-	// {source:{data:[], color:_____}}
-	var connections = {};
-	
+
 	function Init(){
 		LoadCanvas();
-		RegisterDevice();
+		Graph(data);
 	}
 	
-	function RegisterDevice(){
-		Device.addEventListener('register', OnRegister);
-		Device.register();
-	}
-	
-	function OnRegister(event){
-		console.info('Device ID = "'+Device.identifier()+'"');
-		Device.addEventListener('message', OnMessage);
-		Device.addEventListener('verify', OnVerify);
-	}
-	
-	function RandomColor(){
-		return '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-	}
-	function OnVerify(event){
-		connections[event.target.identifier()] = {data:[], color:RandomColor()};
-		UpdateCanvas();
-	}
-	
-	function OnMessage(event){
-		var source = event.source,
-				data = event.data,
-				method = event.method;
-		if(method == 'mobile.acceleration') ReadAcceleration(source, data.data);
-	}
-	function ReadAcceleration(source, points){
-		connections[source].data = points;
-		UpdateCanvas();
-	}
+	var canvas, ctx, width, height;
 	
 	function LoadCanvas(){
 		canvas = document.getElementById('canvas');
@@ -114,87 +77,9 @@ canvas{
 		window.addEventListener('resize', OnResize);
 	}
 	function OnResize(){
-		width = canvas.width = canvas.offsetWidth;
 		height = canvas.height = canvas.offsetHeight;
-		UpdateCanvas();
+		width = canvas.width = canvas.offsetWidth;
 	}
-	function UpdateCanvas(){
-		ctx.clearRect(0,0,width,height);
-		
-		ctx.save();
-		ctx.translate(100, 100);
-		ctx.scale((width-200)/width, (height-200)/height);
-		
-		ctx.fillStyle = 'rgb(255,255,255)';
-		ctx.fillRect(0,0,width,height);
-		
-		ctx.restore();
-		
-		var y = 0;
-		
-		for(var source in connections){
-			var data = connections[source],
-					color = data.color;
-			ctx.fillStyle = color;
-			ctx.fillRect(10, y+10, 30, 30);
-			ctx.fillStyle = 'rgb(0,0,0)';
-			ctx.verticalAlign = 'middle';
-			ctx.textAlign = 'left';
-			ctx.fillText(source, 50, y+30);
-			y += 40;
-			
-			if(data.data.length > 0){
-				ctx.strokeStyle = color;
-				Graph(data.data);
-			}
-			
-			CheckMatches(source);
-		}
-	}
-	
-	function CheckMatches(source){
-		var datar = ImportantRange(connections[source].data);
-		if(datar == undefined) return;
-		var data = connections[source].data.slice(datar.start, datar.end);
-		
-		if(data.length == 0) return;
-		
-		for(var target in connections){
-			if(source == target || connections[target].data.length == 0) continue;
-			var target_datar = ImportantRange(connections[target].data);
-			if(target_datar == undefined) return;
-			var target_data = connections[target].data.slice(datar.start, datar.end);
-			
-			var offset_max = 200;
-			
-			for(var offset=-offset_max; offset<offset_max; offset+=5){
-				var avg_dist = 0;
-				for(var i=0; i<Math.min(data.length, target_data.length); i++){
-					var source_point = data[i],
-							target_point = target_data[i];
-					avg_dist += Math.sqrt(Math.pow(source_point.mag-target_point.mag,2) + Math.pow(offset+source_point.time-target_point.time,2));
-				}
-				avg_dist /= Math.min(data.length, target_data.length);
-				
-				if(avg_dist<2500){
-					console.log(avg_dist)
-					document.getElementById('banner').innerHTML = 'Match!!!';
-					return;
-				}
-				
-			}
-		}
-		
-		document.getElementById('banner').innerHTML = 'No Match';
-	}
-	
-	
-	
-	
-	
-	
-	const peak_threshhold = 0.07;
-	const frames_threshhold = 0.005;
 	
 	function MaxMin(list, getter){
 		if(typeof getter != 'function') getter = function(x){return x;};
@@ -258,12 +143,6 @@ canvas{
 		}
 		return largest;
 	}
-	function ImportantRange(data){
-		var peaks = FilterPeaks(FindPeaks(data), peak_threshhold),
-				freq_frames = FrequencyFrames(peaks, frames_threshhold),
-				range = LargestFrame(freq_frames);
-		return range;
-	}
 	
 	function Graph(data){
 		var time_bound = MaxMin(data, function(x){return x.time;}),
@@ -272,6 +151,9 @@ canvas{
 		ctx.save();
 		ctx.translate(100, 100);
 		ctx.scale((width-200)/width, (height-200)/height);
+		
+		ctx.fillStyle = 'rgb(255,255,255)';
+		ctx.fillRect(0,0,width,height);
 		
 		ctx.beginPath();
 		for(var i=0,point; point=data[i++];){
@@ -283,22 +165,24 @@ canvas{
 		ctx.stroke();
 		
 		// draw peaks
+		const peak_threshhold = 0.07;
+		const frames_threshhold = 0.005;
 		var peaks = FilterPeaks(FindPeaks(data), peak_threshhold),
 				freq_frames = FrequencyFrames(peaks, frames_threshhold),
 				range = LargestFrame(freq_frames);
 		
-		if(peaks.length > 1){
-			for(var i=range.start; i<range.end; i++){
-				var peak = peaks[i];
-				var x = (peak.time - time_bound.min) / (time_bound.max - time_bound.min),
-						y = (peak.mag - mag_bound.min) / (mag_bound.max - mag_bound.min);
-				ctx.fillStyle = 'rgb(0,0,200)';
-				ctx.fillRect(x*width-5, (1-y)*height-5, 10, 10);
-			}
+		console.log(peaks.slice(range.start, range.end))
+		
+		for(var i=range.start; i<range.end; i++){
+			var peak = peaks[i];
+			var x = (peak.time - time_bound.min) / (time_bound.max - time_bound.min),
+					y = (peak.mag - mag_bound.min) / (mag_bound.max - mag_bound.min);
+			ctx.fillStyle = 'rgb(0,0,200)';
+			ctx.fillRect(x*width-5, (1-y)*height-5, 10, 10);
 		}
 		
 		ctx.restore();
-		/*
+		
 		ctx.fillStyle = 'rgb(0,0,0)';
 		ctx.textAlign = 'right';
 		
@@ -310,7 +194,7 @@ canvas{
 		
 		ctx.textAlign = 'right';
 		ctx.fillText(time_bound.max-time_bound.min, width-100, height-80);
-		*/
+		
 	}
 	
 })();

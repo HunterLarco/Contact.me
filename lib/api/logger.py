@@ -1,3 +1,6 @@
 def log(string):
   import logging
-  logging.info(str(string))
+  logging.info('================ RECEIVED DATA')
+  
+  import shakesearch
+  shakesearch.receive(string)

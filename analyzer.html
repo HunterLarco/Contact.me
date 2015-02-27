@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<style>
+
+body{
+	font-family:arial;
+}
+
+.sidebar{
+	position:fixed;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	width:140px;
+	
+	padding:30px;
+	
+	font-size:16px;
+	line-height:16px;
+	
+	background:rgb(220,220,220);
+	
+	overflow:scroll;
+}
+.sidebar master,
+.sidebar client,
+.sidebar line{
+	display:block;
+}
+.sidebar master{
+	text-align:center;
+}
+.sidebar master label{
+	padding:7px 12px;
+	margin:0px 8px;
+	
+	background:rgb(203,78,78);
+	color:rgb(255,255,255);
+	
+	-webkit-border-radius: 3px;
+	-moz-border-radius:    3px;
+	border-radius:         3px;
+	
+	letter-spacing:1px;
+}
+.sidebar line{
+	height:1px;
+	
+	margin:24px 4px;
+	
+	background:rgb(51,51,51);
+}
+.sidebar client,
+.sidebar master{
+	padding:5px 0px;
+}
+.sidebar client div{
+	height:40px;
+	width:40px;
+	
+	margin-right:10px;
+	
+	background:rgb(0,0,0);
+}
+.sidebar client div,
+.sidebar client label{
+	display:inline-block;
+	vertical-align:middle;
+}
+
+</style>
+<html>
+<head>
+<meta charset="utf-8"/>
+
+<title>Device.js | Development</title>
+
+<meta content="yes" name="apple-mobile-web-app-capable" />
+<meta content="minimum-scale=1.0, width=device-width, maximum-scale=1, user-scalable=no" name="viewport"/>
+
+<link rel="stylesheet" href="/resources/css/resets.css"/>
+
+<script src='/resources/scripts/classie.js'></script>
+
+<script src='/resources/scripts/Post.js'></script>
+<script src='/resources/scripts/Device.js'></script>
+<script src='/_ah/channel/jsapi'></script>
+
+<script src='/resources/scripts/dat.gui.js'></script>
+
+</head>
+<body>
+
+
+<div class='sidebar' id='sidebar'>
+	<master>Master <label>Bix</label></master>
+	<line></line>
+</div>
+
+
+<script type='text/javascript'>
+(function(){
+	
+	/*
+	
+	Device.register();// auto assign ID... use nick name
+	device.connect('120cch8934');
+	device.addEventListener('onmessage', OnReceive);
+	device.send(data);
+	device.device('120cch8934').send()
+	device.devices()
+	
+	*/
+	
+	// colors attempt to be unique
+	// shades of gray are excluded
+	var used_colors = [];
+	function RandomColor(){
+		function RandInt(low, high){
+			return Math.floor(Math.random()*(high-low+1))+low;
+		}
+		function ColorDistance(c1, c2){
+			return Math.sqrt(Math.pow(c1[0]-c2[0],2)+Math.pow(c1[1]-c2[1],2)+Math.pow(c1[2]-c2[2],2));
+		}
+		function ColorIsUsed(color){
+			for(var i=0,used; used=used_colors[i++];)
+				if(ColorDistance(used, color) < Constants.closeness) return true;
+			return false;
+		}
+		function IsGray(color){
+			return ColorDistance([color[0], color[0], color[1]], [color[1], color[2], color[2]]) < Constants.grayness;
+		}
+		var color;
+		do{
+			color = [RandInt(0,255), RandInt(0,255), RandInt(0,255)];
+		}while(IsGray(color) || ColorIsUsed(color));
+		used_colors.push(color);
+		return color;
+	}
+	
+	function AddClient(identifier){
+		var client = document.createElement('client'),
+				swatch = document.createElement('div'),
+				label = document.createElement('label');
+		client.appendChild(swatch);
+		client.appendChild(label);
+		label.innerHTML = identifier;
+		swatch.style.backgroundColor = 'rgb('+RandomColor().join(',')+')';
+		document.getElementById('sidebar').appendChild(client);
+	}
+	
+	var Constants = new (function(){
+		this.closeness = 150;
+		this.grayness = 50;
+	})();
+	
+	function AddDatGui(){
+		var gui = new dat.GUI();
+		
+		var thresholds = gui.addFolder('Threshholds'),
+				color = thresholds.addFolder('Color'),
+				shake = thresholds.addFolder('Shake');
+		
+		color.add(Constants, 'closeness').min(0).max(360);
+		color.add(Constants, 'grayness').min(0).max(360);
+		
+		thresholds.open();
+	}
+	
+	AddDatGui();
+	
+	function CheckAllColors(){
+		function ColorDistance(c1, c2){
+			return Math.sqrt(Math.pow(c1[0]-c2[0],2)+Math.pow(c1[1]-c2[1],2)+Math.pow(c1[2]-c2[2],2));
+		}
+		function ColorIsUsed(color){
+			for(var i=0,used; used=used_colors[i++];)
+				if(ColorDistance(used, color) < Constants.closeness) return true;
+			return false;
+		}
+		function IsGray(color){
+			return ColorDistance([color[0], color[0], color[1]], [color[1], color[2], color[2]]) < Constants.grayness;
+		}
+		var count = 0;
+		for(var r=0; r<256; r++)
+			for(var g=0; g<256; g++)
+				for(var b=0; b<256; b++)
+					if(!ColorIsUsed([r,g,b]) && !IsGray([r,g,b])) count++;
+		return count;
+	}
+	
+	window.CheckAllColors = CheckAllColors;
+	
+})();
+</script>
+</body>
+</html>

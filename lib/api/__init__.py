@@ -1,6 +1,8 @@
 import response
 import shakesearch
-all = ['response', 'shakesearch']
+import send
+import channel
+all = ['response', 'shakesearch', 'send', 'channel']
 
 
 import webapp2
